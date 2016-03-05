@@ -31,6 +31,9 @@ namespace OurMeetingPoint.Models
         [Required]
         public string SecretCode { get; set; }
 
+        [Required]
+        public bool Reviewed { get; set; }
+
         // Foreign Key
         public MeetingPoint MeetingPoint { get; set; }
     }
