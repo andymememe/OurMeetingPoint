@@ -10,7 +10,7 @@ namespace OurMeetingPoint.Models
     public class Review
     {
         // Primary Key
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         // Data
@@ -29,6 +29,17 @@ namespace OurMeetingPoint.Models
         public int MeetingPointID { get; set; }
 
         // Foreign Key
+        public MeetingPoint MeetingPoint { get; set; }
+    }
+
+    public class ReviewDetail
+    {
+        public int ID { get; set; }
+
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int Rate { get; set; }
+
         public MeetingPoint MeetingPoint { get; set; }
     }
 }

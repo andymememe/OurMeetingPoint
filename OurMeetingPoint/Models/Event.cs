@@ -10,7 +10,7 @@ namespace OurMeetingPoint.Models
     public class Event
     {
         // Primary Key
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         // Data
@@ -35,6 +35,18 @@ namespace OurMeetingPoint.Models
         public bool Reviewed { get; set; }
 
         // Foreign Key
+        public MeetingPoint MeetingPoint { get; set; }
+    }
+
+    public class EventDetail
+    {
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+        public DateTime MeetingDate { get; set; }
+        public string Description { get; set; }
+        public bool Reviewed { get; set; }
+
         public MeetingPoint MeetingPoint { get; set; }
     }
 }

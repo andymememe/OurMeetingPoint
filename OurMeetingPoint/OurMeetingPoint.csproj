@@ -165,10 +165,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\EventsDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MeetingPointsDataController.cs" />
+    <Compile Include="Controllers\ReviewsDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\MeetingPoint.cs" />
     <Compile Include="Models\Review.cs" />
