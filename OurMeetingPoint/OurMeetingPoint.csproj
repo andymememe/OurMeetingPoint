@@ -129,9 +129,7 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -169,9 +167,18 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeetingPointsDataController.cs" />
     <Compile Include="Controllers\ReviewsDataController.cs" />
+    <Compile Include="DAL\EventRepoEF.cs" />
+    <Compile Include="DAL\IEventRepo.cs" />
+    <Compile Include="DAL\IMeetingPointRepo.cs" />
+    <Compile Include="DAL\IRepo.cs" />
+    <Compile Include="DAL\IReviewRepo.cs" />
+    <Compile Include="DAL\MeetingPointRepoEF.cs" />
+    <Compile Include="DAL\ReviewRepoEF.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hash\SecretCodeGenerator.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\MeetingPoint.cs" />
@@ -179,6 +186,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Connection.mdf" />
+    <Content Include="App_Data\Connection_log.ldf">
+      <DependentUpon>Connection.mdf</DependentUpon>
+    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

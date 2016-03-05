@@ -46,6 +46,7 @@ namespace OurMeetingPoint.Models
         public DateTime MeetingDate { get; set; }
         public string Description { get; set; }
         public bool Reviewed { get; set; }
+        public string SecretCode { get; set; }
 
         public MeetingPoint MeetingPoint { get; set; }
     }

@@ -9,24 +9,30 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using OurMeetingPoint.Models;
+using OurMeetingPoint.DAL;
 
 namespace OurMeetingPoint.Controllers
 {
     public class MeetingPointsDataController : ApiController
     {
-        private Context db = new Context();
+        private IMeetingPointRepo _repo;
+
+        public MeetingPointsDataController()
+        {
+            _repo = new MeetingPointRepoEF(new Context());
+        }
 
         // GET: api/MeetingPointsData
-        public IQueryable<MeetingPoint> GetMeetingPoints()
+        public IEnumerable<MeetingPointDetail> GetMeetingPoints()
         {
-            return db.MeetingPoints;
+            return _repo.GetItems();
         }
 
         // GET: api/MeetingPointsData/5
-        [ResponseType(typeof(MeetingPoint))]
+        [ResponseType(typeof(MeetingPointDetail))]
         public IHttpActionResult GetMeetingPoint(int id)
         {
-            MeetingPoint meetingPoint = db.MeetingPoints.Find(id);
+            MeetingPointDetail meetingPoint = _repo.GetItemById(id);
             if (meetingPoint == null)
             {
                 return NotFound();
@@ -39,6 +45,12 @@ namespace OurMeetingPoint.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutMeetingPoint(int id, MeetingPoint meetingPoint)
         {
+            MeetingPointDetail oldMeetingPoint = _repo.GetItemById(id);
+
+            if(oldMeetingPoint == null)
+            {
+                return NotFound();
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -49,29 +61,14 @@ namespace OurMeetingPoint.Controllers
                 return BadRequest();
             }
 
-            db.Entry(meetingPoint).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MeetingPointExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _repo.Update(meetingPoint);
+            _repo.Save();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/MeetingPointsData
-        [ResponseType(typeof(MeetingPoint))]
+        [ResponseType(typeof(MeetingPointDetail))]
         public IHttpActionResult PostMeetingPoint(MeetingPoint meetingPoint)
         {
             if (!ModelState.IsValid)
@@ -79,24 +76,24 @@ namespace OurMeetingPoint.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.MeetingPoints.Add(meetingPoint);
-            db.SaveChanges();
+            _repo.Create(meetingPoint);
+            _repo.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = meetingPoint.ID }, meetingPoint);
         }
 
         // DELETE: api/MeetingPointsData/5
-        [ResponseType(typeof(MeetingPoint))]
+        [ResponseType(typeof(MeetingPointDetail))]
         public IHttpActionResult DeleteMeetingPoint(int id)
         {
-            MeetingPoint meetingPoint = db.MeetingPoints.Find(id);
+            MeetingPointDetail meetingPoint = _repo.GetItemById(id);
             if (meetingPoint == null)
             {
                 return NotFound();
             }
 
-            db.MeetingPoints.Remove(meetingPoint);
-            db.SaveChanges();
+            _repo.Delete(id);
+            _repo.Save();
 
             return Ok(meetingPoint);
         }
@@ -105,14 +102,9 @@ namespace OurMeetingPoint.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _repo.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool MeetingPointExists(int id)
-        {
-            return db.MeetingPoints.Count(e => e.ID == id) > 0;
         }
     }
 }

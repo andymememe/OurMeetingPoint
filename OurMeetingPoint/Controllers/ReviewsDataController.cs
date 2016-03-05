@@ -9,24 +9,30 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using OurMeetingPoint.Models;
+using OurMeetingPoint.DAL;
 
 namespace OurMeetingPoint.Controllers
 {
     public class ReviewsDataController : ApiController
     {
-        private Context db = new Context();
+        private IReviewRepo _repo;
+
+        public ReviewsDataController()
+        {
+            _repo = new ReviewRepoEF(new Context());
+        }
 
         // GET: api/ReviewsData
-        public IQueryable<Review> GetReviews()
+        public IEnumerable<ReviewDetail> GetReviews()
         {
-            return db.Reviews;
+            return _repo.GetItems();
         }
 
         // GET: api/ReviewsData/5
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(ReviewDetail))]
         public IHttpActionResult GetReview(int id)
         {
-            Review review = db.Reviews.Find(id);
+            ReviewDetail review = _repo.GetItemById(id);
             if (review == null)
             {
                 return NotFound();
@@ -39,6 +45,12 @@ namespace OurMeetingPoint.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutReview(int id, Review review)
         {
+            ReviewDetail oldReview = _repo.GetItemById(id);
+
+            if(oldReview == null)
+            {
+                return NotFound();
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -49,29 +61,14 @@ namespace OurMeetingPoint.Controllers
                 return BadRequest();
             }
 
-            db.Entry(review).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReviewExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _repo.Update(review);
+            _repo.Save();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/ReviewsData
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(ReviewDetail))]
         public IHttpActionResult PostReview(Review review)
         {
             if (!ModelState.IsValid)
@@ -79,24 +76,24 @@ namespace OurMeetingPoint.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Reviews.Add(review);
-            db.SaveChanges();
+            _repo.Create(review);
+            _repo.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = review.ID }, review);
         }
 
         // DELETE: api/ReviewsData/5
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(ReviewDetail))]
         public IHttpActionResult DeleteReview(int id)
         {
-            Review review = db.Reviews.Find(id);
+            ReviewDetail review = _repo.GetItemById(id);
             if (review == null)
             {
                 return NotFound();
             }
 
-            db.Reviews.Remove(review);
-            db.SaveChanges();
+            _repo.Delete(id);
+            _repo.Save();
 
             return Ok(review);
         }
@@ -105,14 +102,9 @@ namespace OurMeetingPoint.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _repo.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool ReviewExists(int id)
-        {
-            return db.Reviews.Count(e => e.ID == id) > 0;
         }
     }
 }

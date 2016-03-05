@@ -9,24 +9,30 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using OurMeetingPoint.Models;
+using OurMeetingPoint.DAL;
 
 namespace OurMeetingPoint.Controllers
 {
     public class EventsDataController : ApiController
     {
-        private Context db = new Context();
+        private EventRepoEF _repo;
+
+        public EventsDataController()
+        {
+            _repo = new EventRepoEF(new Context());
+        }
 
         // GET: api/EventsData
-        public IQueryable<Event> GetEvents()
+        public IEnumerable<EventDetail> GetEvents()
         {
-            return db.Events;
+            return _repo.GetItems();
         }
 
         // GET: api/EventsData/5
-        [ResponseType(typeof(Event))]
+        [ResponseType(typeof(EventDetail))]
         public IHttpActionResult GetEvent(int id)
         {
-            Event @event = db.Events.Find(id);
+            EventDetail @event = _repo.GetItemById(id);
             if (@event == null)
             {
                 return NotFound();
@@ -39,6 +45,12 @@ namespace OurMeetingPoint.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEvent(int id, Event @event)
         {
+            EventDetail oldEvent = _repo.GetItemById(id);
+
+            if(oldEvent == null)
+            {
+                return NotFound();
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -49,29 +61,14 @@ namespace OurMeetingPoint.Controllers
                 return BadRequest();
             }
 
-            db.Entry(@event).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _repo.Update(@event);
+            _repo.Save();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/EventsData
-        [ResponseType(typeof(Event))]
+        [ResponseType(typeof(EventDetail))]
         public IHttpActionResult PostEvent(Event @event)
         {
             if (!ModelState.IsValid)
@@ -79,24 +76,24 @@ namespace OurMeetingPoint.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Events.Add(@event);
-            db.SaveChanges();
+            _repo.Create(@event);
+            _repo.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = @event.ID }, @event);
         }
 
         // DELETE: api/EventsData/5
-        [ResponseType(typeof(Event))]
+        [ResponseType(typeof(EventDetail))]
         public IHttpActionResult DeleteEvent(int id)
         {
-            Event @event = db.Events.Find(id);
+            EventDetail @event = _repo.GetItemById(id);
             if (@event == null)
             {
                 return NotFound();
             }
 
-            db.Events.Remove(@event);
-            db.SaveChanges();
+            _repo.Delete(id);
+            _repo.Save();
 
             return Ok(@event);
         }
@@ -105,14 +102,9 @@ namespace OurMeetingPoint.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _repo.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool EventExists(int id)
-        {
-            return db.Events.Count(e => e.ID == id) > 0;
         }
     }
 }
