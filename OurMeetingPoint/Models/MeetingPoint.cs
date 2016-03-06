@@ -10,7 +10,7 @@ namespace OurMeetingPoint.Models
     public class MeetingPoint
     {
         // Primary Key
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         // Data
@@ -28,7 +28,6 @@ namespace OurMeetingPoint.Models
 
         // Foreign Key
         public ICollection<Event> Events { get; set; }
-        public ICollection<Review> Reviews { get; set; }
     }
 
     public class MeetingPointDetail
@@ -42,6 +41,5 @@ namespace OurMeetingPoint.Models
         public double Lontitude { get; set; }
 
         public List<Event> Events { get; set; }
-        public List<Review> Reviews { get; set; }
     }
 }

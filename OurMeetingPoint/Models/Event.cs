@@ -33,6 +33,9 @@ namespace OurMeetingPoint.Models
 
         // Foreign Key
         public MeetingPoint MeetingPoint { get; set; }
+
+        // Foreign Key
+        public ICollection<Review> Reviews { get; set; }
     }
 
     public class EventDetail
@@ -46,5 +49,7 @@ namespace OurMeetingPoint.Models
         public string SecretCode { get; set; }
 
         public MeetingPoint MeetingPoint { get; set; }
+
+        public List<Review> Reviews { get; set; }
     }
 }

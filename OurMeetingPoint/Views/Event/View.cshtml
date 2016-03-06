@@ -6,7 +6,49 @@
 
 <div class="jumbotron">
     <h1>@Model.Name</h1>
-    <p class="lead">at @Model.MeetingPoint.Name</p>
-    <p class="lead">( @Model.MeetingPoint.Address )</p>
+    <p class="lead"><span class="glyphicon glyphicon-map-marker"></span> @Model.MeetingPoint.Name ( @Model.MeetingPoint.Address )</p>
+    <p class="lead"><span class="glyphicon glyphicon-time"></span> @Model.MeetingDate.ToShortDateString() ( @Model.MeetingDate.DayOfWeek ) </p>
+    <p class="lead"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-calendar"></span> Add to Google Calendar</button></p>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Description</h2>
+        <p class="lead">@Model.Description</p>
+        <h2>Share</h2>
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Facebook</button>
+        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span> Google+</button>
+    </div>
+    <div class="col-md-3">
+        <h2>Review</h2>
+        @if(Model.MeetingDate < DateTime.Now && !Model.Reviewed)
+        {
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Title" name="title" required/>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Write down your review" rows="6" style="resize:none" name="desc" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="rate">Rate:</label>
+                    <input type="number" class="form-control" min="0" max="5" step="1" value="3" name="rate" id="rate" required/>
+                </div>
+                <p class="lead"><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span> Review This Meeting Point</button></p>
+            </form>
+        }
+        else if(Model.MeetingDate > DateTime.Now)
+        {
+            <p class="lead">You only can review the meeting point after the event finished.</p>
+        }
+        else if (Model.Reviewed)
+        {
+            <h4>@Model.Reviews[0].Title <span class="label label-info">@Model.Reviews[0].Rate <span class="glyphicon glyphicon-star"></span></span></h4>
+            <p>@Model.Reviews[0].Description</p>
+        }
+    </div>
+    <div class="col-md-6">
+        <h2>Map</h2>
+    </div>
 </div>
 

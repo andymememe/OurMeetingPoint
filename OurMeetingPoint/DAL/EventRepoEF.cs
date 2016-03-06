@@ -48,6 +48,7 @@ namespace OurMeetingPoint.DAL
                 MeetingDate = @event.MeetingDate,
                 MeetingPoint = _context.MeetingPoints.Find(@event.MeetingPointID),
                 SecretCode = @event.SecretCode,
+                Reviews = _context.Reviews.Where(e => e.EventID == @event.ID).ToList(),
                 Reviewed = @event.Reviewed
             };
 
@@ -66,6 +67,7 @@ namespace OurMeetingPoint.DAL
                 MeetingDate = e.MeetingDate,
                 MeetingPoint = _context.MeetingPoints.Find(e.MeetingPointID),
                 SecretCode = e.SecretCode,
+                Reviews = _context.Reviews.Where(r => r.EventID == e.ID).ToList(),
                 Reviewed = e.Reviewed
             }));
 

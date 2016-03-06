@@ -21,7 +21,6 @@ namespace OurMeetingPoint.Controllers
         [HttpPost]
         public async Task<ActionResult> View(int id, string secret)
         {
-            List<EventDetail> events = await _repo.GetItems();
             EventDetail @event = await _repo.GetItemById(id);
             if(@event.Name == null)
             {

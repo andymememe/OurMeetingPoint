@@ -5,9 +5,8 @@ namespace OurMeetingPoint.Migrations
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Data.Entity.Validation;
     using System.Linq;
-    using System.Text;
+
     internal sealed class Configuration : DbMigrationsConfiguration<OurMeetingPoint.Models.Context>
     {
         public Configuration()
@@ -30,14 +29,14 @@ namespace OurMeetingPoint.Migrations
 
             List<Event> events = new List<Event>()
             {
-                new Event() { ID = 1, Name = "Test Event 1", Description = "Just for the test.", MeetingDate = DateTime.Parse("2016-03-11"), MeetingPointID = 1, Reviewed = false, SecretCode = "12345" },
-                new Event() { ID = 2, Name = "Test Event 2", Description = "Just for the second test.", MeetingDate = DateTime.Parse("2016-05-08"), MeetingPointID = 2, Reviewed = true, SecretCode = "12345" }
+                new Event() { ID = 1, Name = "Test Event 1", Description = "Just for the test.", MeetingDate = DateTime.Parse("2016-03-11"), Reviewed = false, SecretCode = "12345", MeetingPointID = 1 },
+                new Event() { ID = 2, Name = "Test Event 2", Description = "Just for the second test.", MeetingDate = DateTime.Parse("2016-05-08"), Reviewed = true, SecretCode = "12345", MeetingPointID = 2 }
             };
 
             events.ForEach(e => context.Events.Add(e));
             context.SaveChanges();
 
-            Review review = new Review() { ID = 1, Title = "Best meeting point ever", Description = "So good! So great!", Rate = 5, MeetingPointID = 1 };
+            Review review = new Review() { ID = 1, Title = "Best meeting point ever", Description = "So good! So great!", Rate = 5, EventID = 4 };
             context.Reviews.Add(review);
             context.SaveChanges();
         }

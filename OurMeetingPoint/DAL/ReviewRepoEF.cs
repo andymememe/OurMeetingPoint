@@ -40,7 +40,7 @@ namespace OurMeetingPoint.DAL
                 Title = review.Title,
                 Description = review.Description,
                 Rate = review.Rate,
-                MeetingPoint = _context.MeetingPoints.Find(review.MeetingPointID)
+                Event = _context.Events.Find(review.EventID)
             };
 
             return reviewDetail;
@@ -56,7 +56,7 @@ namespace OurMeetingPoint.DAL
                 Title = e.Title,
                 Description = e.Description,
                 Rate = e.Rate,
-                MeetingPoint = _context.MeetingPoints.Find(e.MeetingPointID)
+                Event = _context.Events.Find(e.EventID)
             }));
 
             return reviewDetails;

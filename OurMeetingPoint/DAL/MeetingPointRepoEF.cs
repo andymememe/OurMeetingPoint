@@ -48,8 +48,7 @@ namespace OurMeetingPoint.DAL
                 Address = meetingPoint.Address,
                 Latitude = meetingPoint.Latitude,
                 Lontitude = meetingPoint.Lontitude,
-                Events = _context.Events.Where(ev => ev.MeetingPointID == meetingPoint.ID).ToList(),
-                Reviews = _context.Reviews.Where(r => r.MeetingPointID == meetingPoint.ID).ToList()
+                Events = _context.Events.Where(ev => ev.MeetingPointID == meetingPoint.ID).ToList()
 
             };
 
@@ -68,8 +67,7 @@ namespace OurMeetingPoint.DAL
                 Address = e.Address,
                 Latitude = e.Latitude,
                 Lontitude = e.Lontitude,
-                Events = _context.Events.Where(ev => ev.MeetingPointID == e.ID).ToList(),
-                Reviews = _context.Reviews.Where(r => r.MeetingPointID == e.ID).ToList()
+                Events = _context.Events.Where(ev => ev.MeetingPointID == e.ID).ToList()
             }));
 
             return meetingPointDetails;
