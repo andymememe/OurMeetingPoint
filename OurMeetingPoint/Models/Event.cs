@@ -27,11 +27,8 @@ namespace OurMeetingPoint.Models
         [Required]
         [ForeignKey("MeetingPoint")]
         public int MeetingPointID { get; set; }
-
-        [Required]
+        
         public string SecretCode { get; set; }
-
-        [Required]
         public bool Reviewed { get; set; }
 
         // Foreign Key

@@ -21,9 +21,9 @@ namespace OurMeetingPoint.Models
         public string Description { get; set; }
 
         [Required]
+        public string Address { get; set; }
+        
         public double Latitude { get; set; }
-
-        [Required]
         public double Lontitude { get; set; }
 
         // Foreign Key
@@ -37,6 +37,7 @@ namespace OurMeetingPoint.Models
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Address { get; set; }
         public double Latitude { get; set; }
         public double Lontitude { get; set; }
 
