@@ -65,7 +65,7 @@ namespace OurMeetingPoint.DAL.Http
             }
         }
 
-        public async Task<IEnumerable<MeetingPointDetail>> GetItems()
+        public async Task<List<MeetingPointDetail>> GetItems()
         {
             using (HttpClient client = _CreateHttpClient())
             {

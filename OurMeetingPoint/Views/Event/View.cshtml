@@ -1,0 +1,12 @@
+﻿@model OurMeetingPoint.Models.EventDetail
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<div class="jumbotron">
+    <h1>@Model.Name</h1>
+    <p class="lead">at @Model.MeetingPoint.Name</p>
+    <p class="lead">( @Model.MeetingPoint.Address )</p>
+</div>
+

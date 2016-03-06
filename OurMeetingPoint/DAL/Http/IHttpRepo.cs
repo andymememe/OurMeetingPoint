@@ -10,7 +10,7 @@ namespace OurMeetingPoint.DAL.Http
     public interface IHttpRepo<T, TDetail>
     {
         Task<TDetail> GetItemById(int id);
-        Task<IEnumerable<TDetail>> GetItems();
+        Task<List<TDetail>> GetItems();
         Task<HttpStatusCode> Create(T item);
         Task<HttpStatusCode> Update(int id, T item);
         Task<HttpStatusCode> Delete(int id);

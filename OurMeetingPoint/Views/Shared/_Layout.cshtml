@@ -20,9 +20,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
                 </ul>
+                <form class="navbar-form navbar-right" action="Event/View" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Event ID" name="id" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Secret Code" name="secret" />
+                    </div>
+                    <button type="submit" class="btn btn-success">Check Event</button>
+                </form>
             </div>
         </div>
     </div>
