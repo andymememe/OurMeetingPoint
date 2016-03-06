@@ -1,14 +1,14 @@
-﻿using OurMeetingPoint.Models;
+﻿using Newtonsoft.Json;
+using OurMeetingPoint.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Threading.Tasks;
-using System.Net.Http;
 using System.Net;
-using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 
-namespace OurMeetingPointClient.DAL
+namespace OurMeetingPoint.DAL.Http
 {
     public class MeetingPointHttpRepo : IHttpRepo<MeetingPoint, MeetingPointDetail>
     {
@@ -31,7 +31,7 @@ namespace OurMeetingPointClient.DAL
 
         public async Task<HttpStatusCode> Create(MeetingPoint item)
         {
-            using(HttpClient client = _CreateHttpClient())
+            using (HttpClient client = _CreateHttpClient())
             {
                 HttpResponseMessage response = await client.PostAsJsonAsync(_apiSuffix, item);
                 return response.StatusCode;

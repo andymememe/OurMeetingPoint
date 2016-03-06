@@ -5,9 +5,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OurMeetingPointClient.DAL
+namespace OurMeetingPoint.DAL.Http
 {
-    interface IHttpRepo<T, TDetail>
+    public interface IHttpRepo<T, TDetail>
     {
         Task<TDetail> GetItemById(int id);
         Task<IEnumerable<TDetail>> GetItems();

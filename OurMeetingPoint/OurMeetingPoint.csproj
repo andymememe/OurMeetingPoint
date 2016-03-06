@@ -177,6 +177,10 @@
     <Compile Include="Controllers\MeetingPointsDataController.cs" />
     <Compile Include="Controllers\ReviewsDataController.cs" />
     <Compile Include="DAL\EventRepoEF.cs" />
+    <Compile Include="DAL\Http\EventHttpRepo.cs" />
+    <Compile Include="DAL\Http\IHttpRepo.cs" />
+    <Compile Include="DAL\Http\MeetingPointHttpRepo.cs" />
+    <Compile Include="DAL\Http\ReviewHttpRepo.cs" />
     <Compile Include="DAL\IEventRepo.cs" />
     <Compile Include="DAL\IMeetingPointRepo.cs" />
     <Compile Include="DAL\IRepo.cs" />
