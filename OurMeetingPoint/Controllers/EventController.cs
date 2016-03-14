@@ -39,5 +39,16 @@ namespace OurMeetingPoint.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<ActionResult> New(Event Event, string MeetingDate)
+        {
+            Event.MeetingDate = DateTime.Parse(MeetingDate);
+            await _repo.Create(Event);
+            List<EventDetail> eventDetails = await _repo.GetItems();
+            EventDetail eventDetail = eventDetails.Last();
+
+            return View("View", eventDetail);
+        }
     }
 }

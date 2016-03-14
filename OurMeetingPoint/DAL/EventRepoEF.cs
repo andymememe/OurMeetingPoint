@@ -76,7 +76,7 @@ namespace OurMeetingPoint.DAL
 
         public void Save()
         {
-            _context.SaveChanges();
+            _context.SaveChanges();            
         }
 
         public void Update(Event item)
