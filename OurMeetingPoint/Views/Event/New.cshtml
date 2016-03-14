@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Create Event</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" action="Event/Create">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" placeholder="Enter event's name..." name="Event.Name" id="name" required />
+            </div>
+            <div class="form-group">
+                <label for="Desc">Description:</label>
+                <textarea class="form-control" placeholder="Enter event's description..." name="Event.Description" id="Desc" cols="10" style="resize:none" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Date">Date:</label>
+                <input type="date" class="form-control" placeholder="Enter event's date..." name="Event.MeetingDate" id="Date" required />
+            </div>
+            <div class="form-group">
+                <label for="Meet">Meeting Point:</label>
+                <select class="form-control" name="Event.MeetingPointID" id="Meet" required>
+                    <option disabled selected>Select a meeting point...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Secret">Secret Code:</label>
+                <input type="password" class="form-control" placeholder="Enter your secret code..." name="Event.SecretCode" id="Secret"required />
+            </div>
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div id="map"></div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        $.getJSON("http://localhost:59381/api/MeetingPointsData", {}, function (data) {
+            $.each(data, function (k, v) {
+                $("#Meet").append("<option value='" + v.ID + "' lon='" + v.Lontitude + "' lat='" + v.Latitude + "'>" + v.Name + "</option>");
+            });
+        });
+    });
+</script>
+}
+

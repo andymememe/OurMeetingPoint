@@ -33,5 +33,11 @@ namespace OurMeetingPoint.Controllers
 
             return View(@event);
         }
+
+        [HttpGet]
+        public ActionResult New()
+        {
+            return View();
+        }
     }
 }
