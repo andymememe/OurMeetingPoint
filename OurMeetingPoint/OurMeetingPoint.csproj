@@ -266,6 +266,7 @@
     <Content Include="Scripts\jquery-2.2.1.min.map" />
     <Content Include="Views\Event\View.cshtml" />
     <Content Include="Views\Event\New.cshtml" />
+    <Content Include="Views\Event\Share.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

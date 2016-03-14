@@ -35,6 +35,18 @@ namespace OurMeetingPoint.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> Share(int id)
+        {
+            EventDetail @event = await _repo.GetItemById(id);
+            if (@event.Name == null)
+            {
+                return HttpNotFound("This ID is unavaliable");
+            }
+
+            return View(@event);
+        }
+
+        [HttpGet]
         public ActionResult New()
         {
             return View();
