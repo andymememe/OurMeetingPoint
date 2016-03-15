@@ -1,14 +1,10 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.PlusDomains.v1;
-using OurMeetingPoint.DAL.Http;
+﻿using OurMeetingPoint.DAL.Http;
 using OurMeetingPoint.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OurMeetingPoint.Controllers
