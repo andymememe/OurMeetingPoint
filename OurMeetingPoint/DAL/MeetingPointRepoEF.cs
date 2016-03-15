@@ -17,6 +17,7 @@ namespace OurMeetingPoint.DAL
 
         public void Create(MeetingPoint item)
         {
+            item.ID = _context.MeetingPoints.Count() + 1;
             _context.MeetingPoints.Add(item);
         }
 

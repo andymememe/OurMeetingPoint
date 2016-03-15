@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label for="Date">Date:</label>
-                <input type="date" class="form-control" placeholder="Enter event's date..." name="MeetingDate" id="Date" required />
+                <input type="date" class="form-control" placeholder="Enter event's date (dd-MM-yyyy)..." name="MeetingDate" id="Date" required />
             </div>
             <div class="form-group">
                 <label for="Meet">Meeting Point:</label>
@@ -27,25 +27,52 @@
             </div>
             <div class="form-group">
                 <label for="Secret">Secret Code:</label>
-                <input type="password" class="form-control" placeholder="Enter your secret code..." name="Event.SecretCode" id="Secret"required />
+                <input type="password" class="form-control" placeholder="Enter your secret code..." name="Event.SecretCode" id="Secret" required />
             </div>
             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
         </form>
     </div>
     <div class="col-md-6">
-        <div id="map"></div>
+        <div id="map" style="width: 480px; height: 480px"></div>
     </div>
 </div>
 
 @section Scripts {
-<script>
-    $(document).ready(function () {
-        $.getJSON("http://localhost:59381/api/MeetingPointsData", {}, function (data) {
-            $.each(data, function (k, v) {
-                $("#Meet").append("<option value='" + v.ID + "' lon='" + v.Lontitude + "' lat='" + v.Latitude + "'>" + v.Name + "</option>");
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD73GKxasbHQsD9PJOBdNDQvP08YlBwYV4&language=en"
+            type="text/javascript">
+    </script>
+    <script>
+        $(document).ready(function () {
+            var latlng = new google.maps.LatLng(0, 0);
+
+            $.getJSON("http://localhost:59381/api/MeetingPointsData", {}, function (data) {
+                $.each(data, function (k, v) {
+                    $("#Meet").append("<option value='" + v.ID + "' lon='" + v.Lontitude + "' lat='" + v.Latitude + "'>" + v.Name + "</option>");
+                });
+            });
+            var mapOptions = {
+                zoom: 15,
+                center: latlng
+            }
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: latlng,
+                title: "Place you selected!"
+            });
+
+            $("#Meet").change(function () {
+                marker.setMap(null);
+
+                var lon = $("#Meet option:selected").attr("lon");
+                var lat = $("#Meet option:selected").attr("lat");
+                map.setCenter(new google.maps.LatLng(lat, lon));
+
+                marker.setPosition(new google.maps.LatLng(lat, lon));
+
+                marker.setMap(map);
             });
         });
-    });
-</script>
+    </script>
 }
 

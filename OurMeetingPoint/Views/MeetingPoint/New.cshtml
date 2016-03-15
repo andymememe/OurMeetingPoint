@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New Meeting Point</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" action="Ok">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" placeholder="Enter meeting point's name..." name="MeetingPoint.Name" id="name" required />
+            </div>
+            <div class="form-group">
+                <label for="Desc">Description:</label>
+                <textarea class="form-control" placeholder="Enter meeting point's description..." name="MeetingPoint.Description" id="Desc" cols="10" style="resize:none" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Date">Address:</label>
+                <input type="date" class="form-control" placeholder="Enter meeting point's address..." name="MeetingPoint.Address" id="Address" required />
+            </div>
+            <input type="hidden" value="0" name="MeetingPoint.Lontitude" id="lon" />
+            <input type="hidden" value="0" name="MeetingPoint.Latitude" id="lat" />
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div id="map" style="width: 480px; height: 480px"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD73GKxasbHQsD9PJOBdNDQvP08YlBwYV4&language=en"
+            type="text/javascript">
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            var latlng = new google.maps.LatLng(0, 0);
+
+            var geocoder = new google.maps.Geocoder();
+            var map;
+            var mapOptions = {
+                zoom: 15,
+                center: latlng
+            }
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: latlng,
+                title: "Place you typed!"
+            });
+
+            $("#Address").change(function () {
+                if ($("#Address").val() == "")
+                    return;
+                var address = document.getElementById("Address").value;
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        map.setCenter(results[0].geometry.location);
+                        marker.setMap(null);
+                        marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+
+                        $("#lat").val(results[0].geometry.location.lat());
+                        $("#lon").val(results[0].geometry.location.lng());
+                    }
+                });
+            });
+        });
+    </script>
+}
+

@@ -23,23 +23,24 @@
     </div>
     <div class="col-md-3">
         <h2>Review</h2>
-        @if(Model.MeetingDate < DateTime.Now && !Model.Reviewed)
+        @if (Model.MeetingDate < DateTime.Now && !Model.Reviewed)
         {
-            <form>
+            <form action="Reviewed" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Title" name="title" required/>
+                    <input type="text" class="form-control" placeholder="Title" name="Review.Title" required />
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" placeholder="Write down your review" rows="6" style="resize:none" name="desc" required></textarea>
+                    <textarea class="form-control" placeholder="Write down your review" rows="6" style="resize:none" name="Review.Description" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="rate">Rate:</label>
-                    <input type="number" class="form-control" min="0" max="5" step="1" value="3" name="rate" id="rate" required/>
+                    <input type="number" class="form-control" min="0" max="5" step="1" value="3" name="Review.Rate" id="rate" required />
                 </div>
+                <input type="hidden" name="Review.EventID" value="@Model.ID" />
                 <p class="lead"><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span> Review This Meeting Point</button></p>
             </form>
         }
-        else if(Model.MeetingDate > DateTime.Now)
+        else if (Model.MeetingDate > DateTime.Now)
         {
             <p class="lead">You only can review the meeting point after the event finished.</p>
         }
@@ -51,6 +52,40 @@
     </div>
     <div class="col-md-6">
         <h2>Map</h2>
+        <div id="map" style="width: 480px; height: 480px"></div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD73GKxasbHQsD9PJOBdNDQvP08YlBwYV4&language=en"
+            type="text/javascript">
+    </script>
+    <script>
+        $(document).ready(function () {
+            var map;
+            var latlng = new google.maps.LatLng(@Model.MeetingPoint.Latitude, @Model.MeetingPoint.Lontitude);
+            var mapOptions = {
+                zoom: 15,
+                center: latlng
+            }
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: latlng,
+                title:"@Model.MeetingPoint.Address"
+            });
+
+            // To add the marker to the map, call setMap();
+            marker.setMap(map);
+
+            var infowindow = new google.maps.InfoWindow({
+                content: "<h2>@Model.MeetingPoint.Name</h2><p>@Model.MeetingPoint.Address</p>"
+            });
+
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+        });
+    </script>
+}
 

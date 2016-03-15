@@ -81,7 +81,9 @@ namespace OurMeetingPoint.DAL
 
         public void Update(Event item)
         {
-            _context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+            Event @event = _context.Events.Find(item.ID);
+            @event.Reviewed = true;
+            _context.Entry(@event).State = System.Data.Entity.EntityState.Modified;
         }
     }
 }

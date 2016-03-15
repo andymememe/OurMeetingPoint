@@ -1,4 +1,4 @@
-﻿@model OurMeetingPoint.Models.EventDetail
+﻿@model OurMeetingPoint.Models.MeetingPointDetail
 
 @{
     ViewBag.Title = Model.Name;
@@ -6,15 +6,11 @@
 
 <div class="jumbotron">
     <h1>@Model.Name</h1>
-    <p class="lead"><span class="glyphicon glyphicon-map-marker"></span> @Model.MeetingPoint.Name ( @Model.MeetingPoint.Address )</p>
-    <p class="lead"><span class="glyphicon glyphicon-time"></span> @Model.MeetingDate.ToShortDateString() ( @Model.MeetingDate.DayOfWeek ) </p>
-    <p class="lead"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-calendar"></span> Add to Google Calendar</button></p>
+    <p class="lead"><span class="glyphicon glyphicon-map-marker"></span> @Model.Address </p>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        <h2>ID</h2>
-        <p class="lead">@Model.ID</p>
         <h2>Description</h2>
         <p class="lead">@Model.Description</p>
     </div>
@@ -31,7 +27,7 @@
     <script>
         $(document).ready(function () {
             var map;
-            var latlng = new google.maps.LatLng(@Model.MeetingPoint.Latitude, @Model.MeetingPoint.Lontitude);
+            var latlng = new google.maps.LatLng(@Model.Latitude, @Model.Lontitude);
             var mapOptions = {
                 zoom: 15,
                 center: latlng
@@ -40,14 +36,14 @@
 
             var marker = new google.maps.Marker({
                 position: latlng,
-                title:"@Model.MeetingPoint.Address"
+                title:"@Model.Address"
             });
 
             // To add the marker to the map, call setMap();
             marker.setMap(map);
 
             var infowindow = new google.maps.InfoWindow({
-                content: "<h2>@Model.MeetingPoint.Name</h2><p>@Model.MeetingPoint.Address</p>"
+                content: "<h2>@Model.Name</h2><p>@Model.Address</p>"
             });
 
             marker.addListener('click', function() {
@@ -56,3 +52,4 @@
         });
     </script>
 }
+

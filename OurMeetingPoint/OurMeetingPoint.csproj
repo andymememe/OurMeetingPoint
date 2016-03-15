@@ -62,7 +62,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -138,7 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\MeetingPoint\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -176,6 +175,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventsDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MeetingPointController.cs" />
     <Compile Include="Controllers\MeetingPointsDataController.cs" />
     <Compile Include="Controllers\ReviewsDataController.cs" />
     <Compile Include="DAL\EventRepoEF.cs" />
@@ -267,6 +267,8 @@
     <Content Include="Views\Event\View.cshtml" />
     <Content Include="Views\Event\New.cshtml" />
     <Content Include="Views\Event\Share.cshtml" />
+    <Content Include="Views\MeetingPoint\New.cshtml" />
+    <Content Include="Views\MeetingPoint\Ok.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
