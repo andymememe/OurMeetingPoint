@@ -1,4 +1,7 @@
-﻿using OurMeetingPoint.DAL.Http;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.PlusDomains.v1;
+using OurMeetingPoint.DAL.Http;
 using OurMeetingPoint.Models;
 using System;
 using System.Collections.Generic;

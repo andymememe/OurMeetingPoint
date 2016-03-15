@@ -18,7 +18,7 @@
         <h2>Description</h2>
         <p class="lead">@Model.Description</p>
         <h2>Share</h2>
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Facebook</button>
+        <button type="button" class="btn btn-primary" id="share-fb"><span class="glyphicon glyphicon-thumbs-up"></span> Facebook</button>
         <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span> Google+</button>
     </div>
     <div class="col-md-3">
@@ -61,6 +61,23 @@
             type="text/javascript">
     </script>
     <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '973517479399771',
+          xfbml      : true,
+          version    : 'v2.5'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
         $(document).ready(function () {
             var map;
             var latlng = new google.maps.LatLng(@Model.MeetingPoint.Latitude, @Model.MeetingPoint.Lontitude);
@@ -84,6 +101,18 @@
 
             marker.addListener('click', function() {
                 infowindow.open(map, marker);
+            });
+
+            // Facebook not support localhost share, so I just use google instead.
+            // Original address will be like http://localhost:59381/Event/Share/{EventID}
+            $("#share-fb").click(function(){
+                FB.ui({
+                    method: 'feed',
+                    link: 'http://www.google.com',
+                    name: 'Our Meeting Point',
+                    caption: 'Please check http://localhost:59381/Event/Share/' + '@Model.ID',
+                    description: 'Come and meet me at @Model.MeetingPoint.Name for @Model.Name .'
+                });
             });
         });
     </script>
