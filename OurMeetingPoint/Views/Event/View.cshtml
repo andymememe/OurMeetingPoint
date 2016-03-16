@@ -8,6 +8,7 @@
     <h1>@Model.Name</h1>
     <p class="lead"><span class="glyphicon glyphicon-map-marker"></span> @Model.MeetingPoint.Name ( @Model.MeetingPoint.Address )</p>
     <p class="lead"><span class="glyphicon glyphicon-time"></span> @Model.MeetingDate.ToShortDateString() ( @Model.MeetingDate.DayOfWeek ) </p>
+    <button type="button" class="btn btn-primary" id="share-fb"><span class="glyphicon glyphicon-thumbs-up"></span> Share on Facebook</button>
 </div>
 
 <div class="row">
@@ -16,8 +17,6 @@
         <p class="lead">@Model.ID</p>
         <h2>Description</h2>
         <p class="lead">@Model.Description</p>
-        <h2>Share to Facebook</h2>
-        <button type="button" class="btn btn-primary" id="share-fb"><span class="glyphicon glyphicon-thumbs-up"></span> Facebook</button>
     </div>
     <div class="col-md-3">
         <h2>Review</h2>
@@ -55,9 +54,6 @@
 </div>
 
 @section Scripts {
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD73GKxasbHQsD9PJOBdNDQvP08YlBwYV4&language=en"
-            type="text/javascript">
-    </script>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
